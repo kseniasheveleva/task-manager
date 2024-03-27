@@ -1,43 +1,18 @@
-import { Component } from './core/Component';
-import template from './app.template.hbs';
+import { Component } from "./core/Component";
+import template from "./app.template.hbs";
+
+import './core/Router';
+
+import './pages/home/home.component'
+import './pages/not-found/not-found.component'
+import './pages/board/board.component'
 
 export class App extends Component {
-    constructor() {
-        super();
-
-        this.template = template();
-        this.state = {
-            count: 0,
-            name: 'aaa',
-            surname: 'bbb',
-        }
-    }
-
-    increment = (evt) => {
-        if (evt.target.closest('.increment')) {
-          this.setState({
-            ...this.state,
-            count: this.state.count += 1
-          })  
-        }
-    };
-    decrement = (evt) => {
-        if (evt.target.closest('.decrement')) {
-          this.setState({
-            ...this.state,
-            count: this.state.count -= 1
-          })  
-        }
-    };
-
-    componentDidMount() {
-        this.addEventListener('click', this.increment);
-        this.addEventListener('click', this.decrement);
-    }
-    componentWillUnMount() {
-        this.addEventListener('click', this.increment);
-        this.addEventListener('click', this.decrement);
-    }
+  constructor() {
+    super();
+    this.template = template();
+    this.state = {};
+  }
 }
 
-customElements.define("my-app", App)
+customElements.define("my-app", App);

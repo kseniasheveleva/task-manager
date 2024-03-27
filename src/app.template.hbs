@@ -1,17 +1,8 @@
-<header class="flex h-14 justify-end items-center bg-slate-100">
-    <div class="signing gap-4 flex text-center pr-4">
-        <a href="#"><span class="text-blue-800 text-lg font-medium">Sign in</span></a>
-        <a href="#"><span class="text-blue-800 text-lg font-medium">Sign Up</span></a>
-    </div>
-
-</header>
-    <hgroup class="text-black">
-    <h1>Welcome To <span class="">Task Manager</span></h1>
-    <p>Start managing your activities right now</p>
-    </hgroup>
-    <div class=" flex justify-center h-6">
-        <button class="bg-white rounded text-blue-400 w-3 increment">+</button>
-        <span class=" text-blue-400 ">{{ count }}</span>
-        <span class=" text-blue-400 ">{{ name }}</span>
-        <button class="bg-white rounded text-blue-400 w-3 decrement">-</button>
-    </div>
+<div>
+    <app-router>
+        <app-route path="/" title="Home Page" component="home-page"></app-route>
+        <app-route path="/board/:id" title="Board Page" component="board-page"></app-route>
+        <app-route path="/404" title="404 | Not Found" component="not-found"></app-route>
+        <app-outlet></app-outlet>
+    </app-router>
+</div>
