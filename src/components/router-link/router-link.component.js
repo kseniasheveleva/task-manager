@@ -1,8 +1,8 @@
 import { EVENT_TYPES } from "../../constants/eventTypes";
 import { Component } from "../../core/Component";
 import { eventEmitter } from "../../core/EventEmitter";
-import { useNavigate } from "../../hooks/useNavigate";
-import { template } from "./router-link.template.hbs";
+import template from "./router-link.template.hbs";
+// import { useNavigate } from "../../hooks/useNavigate";
 
 export class RouterLink extends Component {
     constructor() {

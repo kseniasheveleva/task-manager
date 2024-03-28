@@ -3,14 +3,20 @@ import template from "./app.template.hbs";
 
 import './core/Router';
 
-import './pages/home/home.component'
-import './pages/not-found/not-found.component'
-import './pages/board/board.component'
+import './pages/home/home.component';
+import './pages/not-found/not-found.component';
+import './pages/board/board.component';
+import './pages/dashboard/dashboard.component';
+import './pages/sign-in/sign-in.component';
+import './pages/sign-up/sign-up.component';
+import { ROUTES } from "./constants/routes";
 
 export class App extends Component {
   constructor() {
     super();
-    this.template = template();
+    this.template = template({
+      routes: ROUTES,
+    });
     this.state = {};
   }
 }
