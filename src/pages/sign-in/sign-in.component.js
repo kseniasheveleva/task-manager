@@ -1,8 +1,8 @@
 import { Component } from '../../core/Component';
 import template from './sign-in.template.hbs';
 import { ROUTES } from '../../constants/routes';
-import '../../components/input/input.component';
-import '../../components/button/button.component';
+
+import { EVENT_TYPES } from '../../constants/eventTypes';
 
 export class SignIn extends Component {
     constructor() {
@@ -11,6 +11,12 @@ export class SignIn extends Component {
         this.template = template({
             routes: ROUTES,
         });
+        this.state = {
+            errors: {
+                email: "",
+            },
+            isLoading: false,
+        }
     }
 
     onSubmit = (evt) => {
@@ -22,13 +28,6 @@ export class SignIn extends Component {
         
     }
 
-    componentDidMount() {
-        this.addEventListener('submit', this.onSubmit)
-    }
-
-    componentWillUnmount() {
-        this.removeEventListener('submit', this.onSubmit)
-    }
 }
 
 customElements.define("sign-in-page", SignIn)

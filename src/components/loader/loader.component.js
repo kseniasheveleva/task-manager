@@ -1,15 +1,16 @@
 import { Component } from "../../core/Component";
-import template from "./button.template.hbs";
+import template from "./loader.template.hbs";
 
-export class Button extends Component {
+export class Loader extends Component {
   constructor() {
     super();
+
     this.template = template();
     this.state = {
-      caption: this.getAttribute("caption"),
+      isLoading: JSON.parse(this.getAttribute("loading")),
       className: this.getAttribute("class-name"),
     };
   }
 }
 
-customElements.define("ui-button", Button);
+customElements.define("ui-loader", Loader);

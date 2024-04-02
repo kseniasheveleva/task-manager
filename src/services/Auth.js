@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { firebaseService } from "./Firebase";
 
 export class AuthService {
@@ -18,3 +18,5 @@ export class AuthService {
         return signOut(this._auth);
     }
 }
+
+export const authService = new AuthService();
