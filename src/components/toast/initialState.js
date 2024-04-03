@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-    isShow: false,
-    type: null,
-    message: "",
-}
+  isShow: false,
+  type: null,
+  message: "",
+};

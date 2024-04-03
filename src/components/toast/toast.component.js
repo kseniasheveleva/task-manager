@@ -9,33 +9,32 @@ export class Toast extends Component {
   constructor() {
     super();
 
-    this.timerID = null
+    this.timerID = null;
     this.template = template();
-    this.state = INITIAL_STATE
+    this.state = INITIAL_STATE;
   }
 
   hideToast = () => {
-    this.setState(INITIAL_STATE)
-  }
-  
+    this.setState(INITIAL_STATE);
+  };
+
   showToast = ({ detail }) => {
-    this.timerID = setTimeout(hideToast, 3000);
+    this.timerID = setTimeout(this.hideToast, 3000);
     this.setState({
       isShow: true,
       type: getToastType(detail.type),
       message: detail.message,
-    })
+    });
   };
-  
 
   componentDidMount() {
     eventEmitter.on(EVENT_TYPES.toastNotification, this.showToast);
-    this.addEventListener('click', this.hideToast);
+    this.addEventListener("click", this.hideToast);
   }
 
   componentWillUnmount() {
     eventEmitter.off(EVENT_TYPES.toastNotification, this.showToast);
-    this.removeEventListener('click', this.hideToast);
+    this.removeEventListener("click", this.hideToast());
     clearTimeout(this.timerID);
   }
 }

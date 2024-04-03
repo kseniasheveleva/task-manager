@@ -1,12 +1,12 @@
-import { Component } from '../../core/Component';
-import template from './dashboard.template.hbs';
+import { Component } from "../../core/Component";
+import template from "./dashboard.template.hbs";
 
-export class DashBoard extends Component {
-    constructor() {
-        super();
+export class Dashboard extends Component {
+  constructor() {
+    super();
 
-        this.template = template()
-    }
+    this.template = template();
+  }
 }
 
-customElements.define('dashboard-page', DashBoard)
+customElements.define("dashboard-page", Dashboard);

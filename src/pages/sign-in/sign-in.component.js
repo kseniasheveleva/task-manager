@@ -1,33 +1,22 @@
-import { Component } from '../../core/Component';
-import template from './sign-in.template.hbs';
-import { ROUTES } from '../../constants/routes';
-
-import { EVENT_TYPES } from '../../constants/eventTypes';
+import { Component } from "../../core/Component";
+import template from "./sign-in.template.hbs";
+import { ROUTES } from "../../constants/routes";
 
 export class SignIn extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.template = template({
-            routes: ROUTES,
-        });
-        this.state = {
-            errors: {
-                email: "",
-            },
-            isLoading: false,
-        }
-    }
+    this.state = {
+      errors: {
+        email: "",
+      },
+      isLoading: false,
+    };
 
-    onSubmit = (evt) => {
-        evt.preventDefault;
-        const formData = new FormData(evt.target);
-        formData.forEach((value, key)=>{
-            console.log(key, value);
-        } )
-        
-    }
-
+    this.template = template({
+      routes: ROUTES,
+    });
+  }
 }
 
-customElements.define("sign-in-page", SignIn)
+customElements.define("sign-in-page", SignIn);

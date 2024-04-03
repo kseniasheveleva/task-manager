@@ -1,13 +1,37 @@
 <div>
-    <app-router>
-        <app-route path="${props.routes.home}" title="Home Page" component="home-page"></app-route>
-        <app-route path="${props.routes.board}/:id" title="Board Page" component="board-page"></app-route>
-        <app-route path="${props.routes.dashboard}" title="DashBoard Page" component="dashboard-page"></app-route>
-        <app-route path="${props.routes.signIn}" title="SignIn Page" component="sign-in-page"></app-route>
-        <app-route path="${props.routes.signUp}" title="SignUp Page" component="sign-up-page"></app-route>
-        <app-route path="${props.routes.notFound}" title="404 | Not Found" component="not-found"></app-route>
-        <app-outlet></app-outlet>
-    </app-router>
+  <app-router>
+    <app-route
+      path="${props.routes.home}"
+      title="Home Page"
+      component="home-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.dashboard}"
+      title="Dashboard Page"
+      component="dashboard-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.board}/:id"
+      title="Board Page"
+      component="board-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.signIn}"
+      title="Sign In"
+      component="sign-in-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.signUp}"
+      title="Sign Up"
+      component="sign-up-page"
+    ></app-route>
+    <app-route
+      path="${props.routes.notFound}"
+      title="404 | Not Found"
+      component="not-found"
+    ></app-route>
+    <app-outlet></app-outlet>
+  </app-router>
 </div>
 
 <ui-toast></ui-toast>

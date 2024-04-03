@@ -1,4 +1,4 @@
 export const EVENT_TYPES = {
-    changeRoute: "route:change",
-    toastNotification: "ui:toast:notification",
-}
+  changeRoute: "route:change",
+  toastNotification: "ui:toast:notification",
+};
