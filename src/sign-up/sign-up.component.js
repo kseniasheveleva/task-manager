@@ -1,27 +1,21 @@
 import { Component } from "../../core/Component";
-import template from "./sign-in.template.hbs";
+import template from "./sign-up.template.hbs";
 import { ROUTES } from "../../constants/routes";
 import { extractFormData } from "../../utils/extractFormData";
 import { authService } from "../../services/Auth";
 import { useToastNotification } from "../../hooks/useToastNotification";
-import { useNavigate } from "../../hooks/useNavigate";
 import { TOAST_TYPE } from "../../constants/toast";
+import { useNavigate } from "../../hooks/useNavigate";
 import { useUserStore } from "../../hooks/useUserStore";
 
-export class SignIn extends Component {
+export class SignUp extends Component {
   constructor() {
     super();
 
+    this.template = template({ routes: ROUTES });
     this.state = {
-      errors: {
-        email: "",
-      },
       isLoading: false,
     };
-
-    this.template = template({
-      routes: ROUTES,
-    });
   }
 
   toggleIsLoading = () => {
@@ -31,14 +25,15 @@ export class SignIn extends Component {
     });
   };
 
-  signInUser = (evt) => {
+  registerUser = (evt) => {
     evt.preventDefault();
-    const { setUser } = useUserStore();
     const formData = extractFormData(evt.target);
     this.toggleIsLoading();
+    const { setUser } =  useUserStore()
     authService
-      .signIn(formData.email, formData.password)
-      .then((data) => {
+      .signUp(formData.email, formData.password)
+      .then((user) => {
+        setUser({...user});
         useToastNotification({
           message: "Success!!!",
           type: TOAST_TYPE.success,
@@ -54,12 +49,12 @@ export class SignIn extends Component {
   };
 
   componentDidMount() {
-    this.addEventListener("submit", this.signInUser);
+    this.addEventListener("submit", this.registerUser);
   }
 
   componentWillUnmount() {
-    this.removeEventListener("submit", this.signInUser);
+    this.removeEventListener("submit", this.registerUser);
   }
 }
 
-customElements.define("sign-in-page", SignIn);
+customElements.define("sign-up-page", SignUp);

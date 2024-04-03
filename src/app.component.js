@@ -15,6 +15,10 @@ import "./components/toast/toast.component";
 import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
+import { authService } from "./services/Auth";
+import { useToastNotification } from "./hooks/useToastNotification";
+import { store } from "./store/Store";
+import { useUserStore } from "./hooks/useUserStore";
 
 export class App extends Component {
   constructor() {
@@ -22,8 +26,38 @@ export class App extends Component {
     this.template = template({
       routes: ROUTES,
     });
-    this.state = {};
+    this.state = {
+      isLoading: false
+    };
   }
+
+  toggleIsLoading = () => {
+    this.setState({
+      ...this.state,
+      isLoading: !this.state.isLoading,
+    });
+  };
+
+  initializeApp() {
+    this.toggleIsLoading();
+    const { setUser } =  useUserStore()
+    authService.authorizeUser()
+      .then((user) => {
+        setUser({user: user.uui ? user : null})
+      })
+      .catch((error) => {
+        useToastNotification({ message: error.message })
+      })
+      .finally(() => {
+        this.toggleIsLoading()
+      })
+  }
+
+
+  componentDidMount() {
+    this.initializeApp()
+  }
+
 }
 
 customElements.define("my-app", App);

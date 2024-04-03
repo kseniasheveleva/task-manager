@@ -6,6 +6,7 @@ import { authService } from "../../services/Auth";
 import { useToastNotification } from "../../hooks/useToastNotification";
 import { TOAST_TYPE } from "../../constants/toast";
 import { useNavigate } from "../../hooks/useNavigate";
+import { useUserStore } from "../../hooks/useUserStore";
 
 export class SignUp extends Component {
   constructor() {
@@ -26,6 +27,7 @@ export class SignUp extends Component {
 
   registerUser = (evt) => {
     evt.preventDefault();
+    const { setUser } = useUserStore();
     const formData = extractFormData(evt.target);
     this.toggleIsLoading();
     authService
