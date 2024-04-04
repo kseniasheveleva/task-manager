@@ -17,7 +17,6 @@ import "./components/button/button.component";
 import "./components/loader/loader.component";
 import { authService } from "./services/Auth";
 import { useToastNotification } from "./hooks/useToastNotification";
-import { store } from "./store/Store";
 import { useUserStore } from "./hooks/useUserStore";
 
 export class App extends Component {
