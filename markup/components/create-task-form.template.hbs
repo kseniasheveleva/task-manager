@@ -1,0 +1,41 @@
+<form class="create-task-form flex flex-col gap-3">
+  <label class="w-full">
+    <p class="text-sm text-black">Title</p>
+    <input type="text" name="title" class="p-2 w-full border rounded" />
+  </label>
+
+  <label>
+    <p class="text-sm text-black">Task Type</p>
+    <select name="type" class="p-2 w-full border rounded">
+      <option value="${props.type.improvement}">Improvement</option>
+      <option value="${props.type.bug}">Bug</option>
+      <option value="${props.type.task}">Task</option>
+    </select>
+  </label>
+
+  <label>
+    <p class="text-sm text-black">Task priority</p>
+    <select name="priority" class="p-2 w-full border rounded">
+      <option value="${props.priority.major}">Major</option>
+      <option value="${props.priority.minor}">Minor</option>
+      <option value="${props.priority.trivial}">Trivial</option>
+    </select>
+  </label>
+
+  <label class="w-full">
+    <p class="text-sm text-black">Description</p>
+    <textarea name="description" class="p-2 w-full border rounded"></textarea>
+  </label>
+
+  <div>
+    <p class="text-sm text-black">Attachments</p>
+    <label
+      class="w-full h-14 border border-dashed border-indigo-500 cursor-pointer flex items-center justify-center text-indigo-500 text-2xl">
+      <div class="icon-upload"></div>
+      <input name="attachments" type="file" multiple class="hidden attachments" accept="image/png, image/jpeg">
+    </label>
+  </div>
+
+  <div class="flex flex-wrap gap-2 preview-block"></div>
+
+</form>
