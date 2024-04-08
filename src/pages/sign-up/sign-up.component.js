@@ -33,7 +33,7 @@ export class SignUp extends Component {
     authService
       .signUp(formData.email, formData.password)
       .then((data) => {
-        setUser(user);
+        setUser({ ...data.user });
         useToastNotification({
           message: "Success!!!",
           type: TOAST_TYPE.success,

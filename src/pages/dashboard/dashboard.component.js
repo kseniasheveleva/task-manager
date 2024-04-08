@@ -1,23 +1,26 @@
-import { ROUTES } from "../../constants/routes";
-import { TOAST_TYPE } from "../../constants/toast";
 import { Component } from "../../core/Component";
-import { useNavigate } from "../../hooks/useNavigate";
-import { useToastNotification } from "../../hooks/useToastNotification";
-import { useUserStore } from "../../hooks/useUserStore";
-import { apiService } from "../../services/Api";
-import { authService } from "../../services/Auth";
 import template from "./dashboard.template.hbs";
+import { apiService } from "../../services/Api";
+import { mapResponseApiData } from "../../utils/api";
+import { useUserStore } from "../../hooks/useUserStore";
+import { authService } from "../../services/Auth";
+import { useToastNotification } from "../../hooks/useToastNotification";
+import { TOAST_TYPE } from "../../constants/toast";
+import { useNavigate } from "../../hooks/useNavigate";
+import { ROUTES } from "../../constants/routes";
+import { store } from "../../store/Store";
 
 export class Dashboard extends Component {
   constructor() {
     super();
 
     this.template = template();
+
     this.state = {
       isLoading: false,
       user: null,
       boards: [],
-    }
+    };
   }
 
   toggleIsLoading = () => {
@@ -27,46 +30,59 @@ export class Dashboard extends Component {
     });
   };
 
+  openCreateBoardModal() {}
+
+  openDeleteBoardModal() {}
+
+  get() {}
+
+  logout = () => {
+    this.toggleIsLoading();
+    const { setUser } = useUserStore();
+    authService
+      .logOut()
+      .then(() => {
+        setUser(null);
+        useToastNotification({ type: TOAST_TYPE.success, message: "Success!" });
+        useNavigate(ROUTES.signIn);
+      })
+      .catch(({ message }) => {
+        useToastNotification({ message });
+      })
+      .finally(() => {
+        this.toggleIsLoading();
+      });
+  };
+
+  onClick = ({ target }) => {
+    if (target.closest(".create-board")) {
+      this.openCreateBoardModal();
+    }
+
+    if (target.closest(".delete-board")) {
+      this.openDeleteBoardModal();
+    }
+
+    if (target.closest(".logout-btn")) {
+      this.logout();
+    }
+  };
+
   setUser() {
     const { getUser } = useUserStore();
     this.setState({
       ...this.state,
       user: getUser(),
-    })
-  }
-
-  logUserOut() {
-    const { setUser } = useUserStore();
-    authService.logOut()
-    .then(() => {
-      setUser(null);
-      useToastNotification({ type: TOAST_TYPE.success, message: 'Success!' })
-      useNavigate(ROUTES.home)
-    })
-    .catch((error) => {
-      useToastNotification({ message: error.message })
-    })
-  }
-
-  openCreateBoardModal() {}
-
-  openDeleteBoardModel() {}
-
-  get() {}
-
-  onClick = ({ target }) => {
-    if (target.closest('.create-board')) {this.openCreateBoardModal()}
-    if (target.closest('.delete-board')) {this.openDeleteBoardModel()}
-    if (target.closest('.logout-btn')) {this.logOut()}
+    });
   }
 
   componentDidMount() {
     this.setUser();
-    this.addEventListener('click', this.onClick);
+    this.addEventListener("click", this.onClick);
   }
 
   componentWillUnmount() {
-    this.removeEventListener('click', this.onClick);
+    this.removeEventListener("click", this.onClick);
   }
 }
 
