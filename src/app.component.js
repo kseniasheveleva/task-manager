@@ -10,7 +10,7 @@ import "./pages/board/board.component";
 import "./pages/dashboard/dashboard.component";
 import "./pages/sign-in/sign-in.component";
 import "./pages/sign-up/sign-up.component";
-
+import "./components/modal/modal.component";
 import "./components/toast/toast.component";
 import "./components/input/input.component";
 import "./components/button/button.component";
