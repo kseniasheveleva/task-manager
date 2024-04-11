@@ -29,6 +29,13 @@ export class Modal extends Component {
       this.appendTemplate(detail.template);
     }
 
+    if (detail.successCaption) {
+      this.setState({
+        ...this.state,
+        successBtnColor: "bg-red-500"
+      })
+    }
+
   };
 
   closeModal = () => {

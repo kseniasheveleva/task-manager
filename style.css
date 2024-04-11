@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.todo-border-color {
+    @apply border-indigo-300;
+}
+
+.in-development-border-color {
+    @apply border-green-300;
+}
+
+.development-done-border-color {
+    @apply border-blue-300;
+}
+
+.ready-for-testing-border-color {
+    @apply border-yellow-300;
+}
+
+.testing-done-border-color {
+    @apply border-green-300;
+}
+
+.closed-border-color {
+    @apply border-slate-300;
+}
+
+.major-icon-color {
+    @apply text-red-500;
+}
+
+.major-minor-color {
+    @apply text-blue-500;
+}
+
+.trivial-icon-color {
+    @apply text-slate-500;
+}
+
+.improvement-icon-color {
+    @apply text-blue-500
+}
+
+.bug-icon-color {
+    @apply text-red-500
+}
+
+.task-icon-color {
+    @apply text-green-500
+}

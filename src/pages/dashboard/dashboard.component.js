@@ -13,7 +13,7 @@ import { eventEmitter } from "../../core/EventEmitter";
 import { EVENT_TYPES } from "../../constants/eventTypes";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
-import { createBoardApi, getBoardsApi } from "../../api/boards";
+import { createBoardApi, deleteBoardApi, getBoardsApi } from "../../api/boards";
 
 export class Dashboard extends Component {
   constructor() {
@@ -43,7 +43,7 @@ export class Dashboard extends Component {
         console.log("DATA",data);
         this.setState({
           ...this.state,
-          boards: mapResponseApiData(data),
+          boards: data ? mapResponseApiData(data) : [],
         });
       })
       .catch(({ message }) => {
@@ -78,12 +78,28 @@ export class Dashboard extends Component {
     })
   }
 
-  openDeleteBoardModal() {
-    
+  openDeleteBoardModal({ id, title }) {
+    useModal({
+      isOpen: true,
+      successCaption: "Delete",
+      confirmation: `Do you really want to delete "${title}"`,
+      onSuccess: () => {
+        this.toggleIsLoading();
+        deleteBoardApi(this.state.user.uid, id)
+        .then(() => {
+          this.loadAllBoards()
+        })
+        .catch(({ message }) => {
+          useToastNotification({ message })
+        })
+        .finally(() => {
+          this.toggleIsLoading()
+        })
+      },
+    })
   }
 
   get() {}
-
   logout = () => {
     this.toggleIsLoading();
     const { setUser } = useUserStore();
@@ -102,17 +118,31 @@ export class Dashboard extends Component {
       });
   };
 
+
+
   onClick = ({ target }) => {
+    const boardItem = target.closest(".board-item");
+    const logOut = target.closest(".logout-btn");
+    const deleteBoard = target.closest(".delete-board");
     if (target.closest(".create-board")) {
       this.openCreateBoardModal();
+      return
     }
 
-    if (target.closest(".delete-board")) {
-      this.openDeleteBoardModal();
+    if (deleteBoard) {
+      this.openDeleteBoardModal({id: deleteBoard.dataset.id, title: deleteBoard.dataset.title});
+      return
     }
 
-    if (target.closest(".logout-btn")) {
+    if (logOut) {
       this.logout();
+      return
+    }
+
+    if (boardItem) {
+      console.log(boardItem.dataset.id);
+      useNavigate(`${ROUTES.board}/${boardItem.dataset.id}`)
+      return
     }
   };
 
