@@ -37,6 +37,7 @@ export class Modal extends Component {
 
   onSuccess = (evt) => {
     this.state.onSuccess(this);
+    console.log('THIS', this);
     this.closeModal();
   };
 
