@@ -29,7 +29,7 @@ export class Modal extends Component {
       this.appendTemplate(detail.template);
     }
 
-    if (detail.successCaption) {
+    if (detail.successCaption === 'Delete') {
       this.setState({
         ...this.state,
         successBtnColor: "bg-red-500"

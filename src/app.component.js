@@ -16,6 +16,8 @@ import "./components/toast/toast.component";
 import "./components/input/input.component";
 import "./components/button/button.component";
 import "./components/loader/loader.component";
+import "./components/task-card/task-card.component";
+import "./components/create-task-form/create-task-form.component";
 import { authService } from "./services/Auth";
 import { useToastNotification } from "./hooks/useToastNotification";
 import { useUserStore } from "./hooks/useUserStore";
