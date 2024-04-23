@@ -40,7 +40,6 @@ export class Dashboard extends Component {
     this.toggleIsLoading();
     getBoardsApi(this.state.user.uid)
       .then(({ data }) => {
-        console.log("DATA",data);
         this.setState({
           ...this.state,
           boards: data ? mapResponseApiData(data) : [],
@@ -140,7 +139,6 @@ export class Dashboard extends Component {
     }
 
     if (boardItem) {
-      console.log(boardItem.dataset.id);
       useNavigate(`${ROUTES.board}/${boardItem.dataset.id}`)
       return
     }
