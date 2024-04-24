@@ -12,11 +12,14 @@ export class Modal extends Component {
     this.state = INITIAL_STATE;
   }
 
-  appendTemplate = (template) => {
+  appendTemplate = (template, data) => {
     const tmp = document.createElement(template);
-    console.log(tmp);
-    const modalBody = this.querySelector(".modal-body")
-    modalBody.append(tmp);
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        tmp.setAttribute(key, data[key]);
+      });
+    }
+    this.querySelector(".modal-body").append(tmp);
   };
 
   modalHandler = ({ detail }) => {
@@ -24,27 +27,18 @@ export class Modal extends Component {
       ...this.state,
       ...detail,
     });
-    console.log(detail);
+
     if (detail.template) {
-      this.appendTemplate(detail.template);
+      this.appendTemplate(detail.template, detail.data);
     }
-
-    if (detail.successCaption === 'Delete') {
-      this.setState({
-        ...this.state,
-        successBtnColor: "bg-red-500"
-      })
-    }
-
   };
 
   closeModal = () => {
     this.setState(INITIAL_STATE);
   };
 
-  onSuccess = (evt) => {
+  onSuccess = () => {
     this.state.onSuccess(this);
-    console.log('THIS', this);
     this.closeModal();
   };
 
@@ -59,11 +53,13 @@ export class Modal extends Component {
 
   componentDidMount() {
     eventEmitter.on(EVENT_TYPES.modal, this.modalHandler);
+    eventEmitter.on("form:error", this.validateForm);
     this.addEventListener("click", this.onClick);
   }
 
   componentWillUnmount() {
     eventEmitter.off(EVENT_TYPES.modal, this.modalHandler);
+    eventEmitter.off("form:error", this.validateForm);
     this.removeEventListener("click", this.onClick);
   }
 }

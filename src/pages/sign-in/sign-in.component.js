@@ -40,7 +40,6 @@ export class SignIn extends Component {
       .signIn(formData.email, formData.password)
       .then((data) => {
         setUser({ ...data.user });
-        console.log(data);
         useToastNotification({
           message: "Success!!!",
           type: TOAST_TYPE.success,

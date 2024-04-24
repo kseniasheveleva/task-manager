@@ -7,10 +7,11 @@ import { ROUTES } from "../../constants/routes";
 import { useModal } from "../../hooks/useModal";
 import { extractFormData } from "../../utils/extractFormData";
 import { storageService } from "../../services/Storage";
-import { createTaskAPI, getAllTasksAPI } from "../../api/tasks";
+import { createTaskAPI, getAllTasksAPI, updateTaskAPI } from "../../api/tasks";
 import { TASK_STATUSES } from "../../constants/task";
 import { useToastNotification } from "../../hooks/useToastNotification";
 import { mapResponseApiData } from "../../utils/api";
+import { useDrawer } from "../../hooks/useDrawer";
 
 export class BoardPage extends Component {
   constructor() {
@@ -62,6 +63,10 @@ export class BoardPage extends Component {
   }
 
   uploadAttachments(attachments) {
+     if (attachments.length === 0) {
+      return Promise.resolve([]);
+    }
+
     const { user, boardId } = this.state;
     const path = `${user.uid}/${boardId}`;
     const promiseFiles = attachments.map((attachment) => {
@@ -72,6 +77,9 @@ export class BoardPage extends Component {
   }
 
   loadAttachmentsUrl(data) {
+     if (data.length === 0) {
+      return Promise.resolve([]);
+    }
     return Promise.all(
       data.map((snapshot) => storageService.downloadURL(snapshot.ref))
     );
@@ -88,7 +96,9 @@ export class BoardPage extends Component {
         const formData = new FormData(form);
         const preparedData = {
           ...extractFormData(form),
-          attachments: formData.getAll("attachments"),
+          attachments: formData
+            .getAll("attachments")
+            .filter((item) => item.name),
         };
         this.toggleIsLoading();
         this.uploadAttachments(preparedData.attachments)
@@ -118,6 +128,20 @@ export class BoardPage extends Component {
   onClick = ({ target }) => {
     const goToDashboard = target.closest(".go-to-dashboard");
     const createTaskBtn = target.closest(".create-task-btn");
+    const card = target.closest("ui-task-card");
+
+    if (card) {
+      const { user, boardId } = this.state
+      const template = document.createElement("ticket-details")
+      template.setAttribute("uid", user.uid)
+      template.setAttribute("board-id", boardId)
+      template.setAttribute("id", card.dataset.id)
+
+      useDrawer({
+        template: template,
+        title: 'Ticket Detail'
+      })
+    }
 
     if (goToDashboard) {
       useNavigate(ROUTES.dashboard);
@@ -128,10 +152,50 @@ export class BoardPage extends Component {
     }
   };
 
+  changeTaskStatus = (taskId, status) => {
+    this.toggleIsLoading();
+    const { user, boardId } = this.state;
+    updateTaskAPI({uid: user.uid, boardId, taskId, data: { status }})
+    .then(() => {
+      this.getAllTasks()
+    })
+    .catch(({ message }) => {
+      useToastNotification({ message });
+    })
+    .finally(() => {
+      this.toggleIsLoading();
+    });
+  }
+
+  onDragStart = (evt) => {
+    evt.dataTransfer.setData("text", evt.target.dataset.id)
+  }
+  onDragOver = (evt) => {
+    evt.preventDefault();
+    return false
+  }
+  onDragDrop = (evt) => {
+    const taskId = evt.dataTransfer.getData("text")
+    const currentColumn = evt.target.closest(".task-column")
+    const status = currentColumn.dataset.column;
+    this.changeTaskStatus(taskId, status)
+  }
+
   componentDidMount() {
     this.initialization();
     this.getAllTasks();
     this.addEventListener("click", this.onClick);
+
+    this.addEventListener('dragstart', this.onDragStart)
+    this.addEventListener('dragover', this.onDragOver)
+    this.addEventListener('drop', this.onDragDrop)
+  }
+
+  componentWillUnmount() {
+    this.removeEventListener("click", this.onClick);
+    this.removeEventListener('dragstart', this.onDragStart);
+    this.removeEventListener('dragover', this.onDragOver);
+    this.removeEventListener('drop', this.onDragDrop);
   }
 }
 

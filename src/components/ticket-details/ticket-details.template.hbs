@@ -1,0 +1,28 @@
+<div class="relative">
+    <ui-loader loading="{{ isLoading }}"></ui-loader>
+    <h2 class="text-2xl">{{ data.title }}</h2>
+
+    <div class="grid grid-cols-2 mt-5 gap-2">
+        <p class="font-bold">Status</p>
+        <p class="uppercase">{{ data.status }}</p>
+        <p class="font-bold">Priority</p>
+        <p class="uppercase">{{ data.priority }}</p>
+        <p class="font-bold">Type</p>
+        <p class="uppercase">{{ data.type }}</p>
+        <p class="font-bold">Created At</p>
+        <p class="uppercase">{{ data.createdAt }}</p>
+    </div>
+
+    <div class="mt-5">
+        <p class="font-bold">Description</p>
+        <p>{{ data.description }}</p>
+    </div>
+    <div class="mt-5">
+        <p class="font-bold">Attachments</p>
+        <div class="mt-5 flex flex-wrap gap-2">
+            {{#each data.attachments}}
+            <img src="{{this}}" />
+            {{/each}}
+        </div>
+    </div>
+</div>
