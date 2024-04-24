@@ -1,31 +1,53 @@
 <div class="min-h-screen relative">
-    <ui-loader loading="{{ isLoading }}" class="z-10"></ui-loader>
-    <div class="flex flex-col min-h-screen">
-        <header class="p-4 border border-l-0 border-t-0 border-r-0 mb-12 flex justify-between">
-            <button class="go-to-dashboard text-indigo-500 flex items-center gap-2 hover:text-indigo-600">
-                <div class="icon-arrow-left"></div>
-                Back To Dashboard
-            </button>
-            <button class="create-task-btn p-2 text-white bg-indigo-500 rounded hover:bg-indigo-700">
-                Create Task
-            </button>
-        </header>
-        <div class="flex w-full gap-4 h-full flex-1">
-            {{#each columns}}
-            <div class="flex-1">
-                <h2 class="text-center uppercase font-medium border-b-2 {{this.color}} pb-2">
-                    {{ this.status }}
-                </h2>
-                <div class="flex flex-col p-2 h-full bg-slate-100/50 task-column gap-2" data-column="{{ this.status }}">
-                    {{#each this.tasks}}
-                    <ui-task-card type="{{ this.type }}" priority="{{ this.priority }}" data-id="{{ this.id }}"
-                        title="{{ this.title }}" description="{{ this.description }}" status="{{ this.status }}"
-                        draggable="true">
-                    </ui-task-card>
-                    {{/each}}
-                </div>
-            </div>
-            {{/each}}
+  <ui-loader loading="{{isLoading}}"></ui-loader>
+  <div class="flex flex-col min-h-screen">
+    <header
+      class="p-4 border border-l-0 border-t-0 border-r-0 mb-12 flex justify-between"
+    >
+      <button
+        class="go-to-dashboard text-indigo-500 flex items-center gap-2 hover:text-indigo-600"
+      >
+        <div class="text-2xl">
+          <div class="icon-arrow-left"></div>
         </div>
+
+        Back To Dashboard
+      </button>
+      <button
+        class="create-task-btn p-2 text-white bg-indigo-500 rounded hover:bg-indigo-700"
+      >
+        Create Task
+      </button>
+    </header>
+    <div class="flex w-full gap-4 h-full flex-1">
+      {{#each columns}}
+        <div class="flex-1">
+          <h2
+            class="text-center uppercase font-medium border-b-2
+              {{this.color}}
+              pb-2"
+          >
+            {{this.status}}
+          </h2>
+          <div
+            class="flex flex-col p-2 h-full bg-slate-100/50 task-column gap-2"
+            data-column="{{this.status}}"
+          >
+            {{#each this.tasks}}
+              <ui-task-card
+                type="{{this.type}}"
+                priority="{{this.priority}}"
+                data-id="{{this.id}}"
+                title="{{this.title}}"
+                description="{{this.description}}"
+                status="{{this.status}}"
+                draggable="true"
+              >
+              </ui-task-card>
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
     </div>
+  </div>
 </div>
